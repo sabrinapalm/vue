@@ -1,0 +1,144 @@
+<!--Skapa en webbsida som länkar till Vue.js i <head>.
+Skriv kod i <head> som skapar ett inställningsobjekt och ett Vue-objekt när sidan laddas.
+Det ska finnas en egenskap med namnet x i data-sektionen.
+Använd mustacher för att klistra in värdet av egenskapen på webbsidan: {{ x }}.
+Utgå från exemplen i slides.
+-->
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Vue demo</title>
+	<script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+	<style>
+  body {
+    background-color: #F1F1F1;
+    color: #333;
+    font-size: 1.2em;
+    font-family: arial, sans-serif;
+  }
+  #root {
+    border: 2px solid black;
+    padding: 10px;
+  }
+  button {
+    cursor: pointer;
+  }
+  .newColor {
+    background-color: lightgreen;
+    border: none;
+  }
+  div.themeBlue {
+    background-color: lightblue;
+    padding: 5px;
+  }
+  .themeBlue h1 {
+    color: white;
+  }
+  .themeBlue p {
+    color: white;
+  }
+
+  div.themeRed {
+    background-color: darkred;
+    padding: 5px;
+  }
+  .themeRed h1 {
+    color: white;
+  }
+  .themeRed p {
+    color: white;
+  }
+
+	</style>
+	<script>
+	window.addEventListener('load', () => {
+    new Vue({
+      //hämta element
+      el: '#root',
+      //addera data
+      data: {
+        x: 3,
+        string: 'is the magic number',
+        buttonCss: 'newColor',
+        counter: 1337,
+        changeColor: 'themeBlue',
+				disabledOrEnabled: 'disabled',
+				disableButton: true,
+				toggle: 'no',
+				seen: true,
+				user: {
+					name:''
+				}
+      },
+      //addera methods
+      methods: {
+        addUs: function(event) {
+          this.x = `${this.x} ${this.string}`
+        },
+        resetNum: function(event) {
+          this.counter = 0;
+        },
+        increaseNum: function(event) {
+          this.counter = this.counter + 1;
+        },
+        decreaseNum: function(event) {
+          this.counter = this.counter - 1;
+        },
+        changeToBlue: function(event) {
+          this.changeColor = 'themeBlue';
+        },
+        changeToRed: function(event) {
+          this.changeColor = 'themeRed';
+        },
+				enableButton: function(event) {
+					if (this.toggle == 'yes') {
+						this.disableButton = false;
+						this.disabledOrEnabled = 'enabled';
+					} else {
+						this.disableButton = true;
+						this.disabledOrEnabled = 'disabled';
+					}
+				},
+				hide: function(event) {
+					this.seen = false
+				},
+				show: function(event) {
+					this.seen = true
+				}
+      }
+
+    });
+	});  // window load
+	</script>
+</head>
+
+<body>
+	<div id="root">{{ x }}
+    <button :class="buttonCss" @click="addUs">is what?</button>
+    <p>{{ counter }}</p>
+    <button @click="resetNum">Reset</button>
+    <button @click="increaseNum">Increase</button>
+    <button @click="decreaseNum">Decrease</button>
+
+    <div v-if="seen" :class="changeColor">
+  	<h1>Rubrik</h1>
+  	<p>Lite text</p>
+    <button @click="changeToBlue">blue</button>
+    <button @click="changeToRed">red</button>
+    </div>
+
+
+		<input type="checkbox" @change="enableButton" v-model="toggle" true-value="yes" false-value="no">
+  	<button :disabled="disableButton"> {{ disabledOrEnabled }}</button>
+
+		<button @click="hide">Hide</button>
+		<button @click="show">Show</button>
+		<br /><br />
+		<form>
+			<p> {{ user.name }} </p>
+			<input v-model="user.name">
+		</form>
+</div>
+
+</body>
+</html>

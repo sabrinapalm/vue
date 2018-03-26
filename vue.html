@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Vue demo</title>
+	<script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+
+
+	<style>
+		* {
+	    background-color: #f4f4f4;
+	    color: #232323;
+      font-family: arial,sans-serif;
+	  }
+	</style>
+	<script>
+	window.addEventListener('load', () => {
+		/*let vm = */new Vue({  // glöm inte window.load!
+			el: '#root',
+			data: {
+				exempel: 'Det fungerar',
+				exempeldos: ' knappt',
+				url: 'https://google.se'
+			},  // data
+			methods: {
+				myClick: function(event) {
+					this.exempeldos = ' fantastiskt bra att klicka!';
+					this.another();
+				},
+				another: function() {}
+			}  // methods
+		});  // Vue
+	});  // window load
+	</script>
+</head>
+
+<body>
+
+	<div id="root">
+		Fungerar Vue här?
+		<p v-once>{{ exempeldos }}</p>
+    <p>{{ exempel + exempeldos }}</p>
+		<a v-bind:href="url">länk</a>
+		<button v-on:click="myClick">Ändra exempeldos</button>
+</div>
+
+</body>
+</html>
